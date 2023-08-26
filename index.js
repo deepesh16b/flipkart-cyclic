@@ -6,6 +6,7 @@ import cors from "cors";
 import Connection from "./database/db.js";
 import DefaultData from "./default.js";
 import Route from "./routes/route.js";
+import path from 'path';
 
 dotenv.config();
 
@@ -15,7 +16,10 @@ app.use(
     origin: "*",
   })
 );
-
+app.use(express.static(path.join(__dirname, './client/build')))
+app.use("*",function(res, req){
+  res.sendFile(path.join(__dirname, './client/build/index.html'));
+})
 app.use(express.urlencoded({ extended: true }));
 const PORT = 8000;
 
@@ -24,9 +28,7 @@ const password = process.env.USER_PASSWORD;
 
 Connection(user, password);
 
-app.listen(PORT || process.env.PORT, () =>
-  console.log(`Server started at port ${PORT}!`)
-);
+app.listen(PORT || process.env.PORT);
 
 DefaultData();
 
@@ -35,6 +37,5 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", Route);
 
 app.get("/getKey", (req, res) => {
-  console.log("getapikey successsss");
   res.status(200).json({ key: process.env.RAZORPAY_API_KEY });
 });

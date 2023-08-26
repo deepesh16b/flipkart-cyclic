@@ -15,7 +15,6 @@ import {
 
 const router = express.Router();
 
-console.log("before mongodb req. , inside route");
 router.post("/signup", userSignup);
 router.post("/login", userLogIn);
 router.get("/products", getProductsData);

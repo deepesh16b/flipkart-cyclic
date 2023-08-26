@@ -8,7 +8,6 @@ export const Connection = async (user, password) => {
       useUnifiedTopology: true,
       useNewUrlParser: true,
     });
-    console.log("DataBase Connected Successfully!");
   } catch (error) {
     console.log("Error while connection with database", error.message);
   }
