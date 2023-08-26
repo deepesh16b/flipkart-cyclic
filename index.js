@@ -7,6 +7,11 @@ import Connection from "./database/db.js";
 import DefaultData from "./default.js";
 import Route from "./routes/route.js";
 import path from 'path';
+import { fileURLToPath } from "url";
+
+// esmodule fix
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
