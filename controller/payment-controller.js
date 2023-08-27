@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
+import Razorpay from 'razorpay';
 import crypto from "crypto";
 
 const hmac_sha256 = (data, secret) => {
@@ -10,19 +11,36 @@ const hmac_sha256 = (data, secret) => {
 };
 
 
-import { instance } from "./instance.js";
+// import { instance } from "./instance.js";
 
 export const checkout = async (req, res) => {
   // res.header("Access-Control-Allow-Origin", "https://flipkart3.vercel.app");
+  const instance = new Razorpay({
+    key_id: process.env.RAZORPAY_API_KEY,
+    key_secret: process.env.RAZORPAY_API_SECRET,
+  });
+  console.log("before options creation");
   var options = {
     amount: Number(req.body.amount * 100), // amount in the smallest currency unit
     currency: "INR",
   };
+  console.log("before order creation");
   const order = await instance.orders.create(options);
-  res.status(200).json({
+  if(!order){
+    console.log("order failed");
+    res.status(400).json({
+      success: false,
+      order: "order not created",
+    });
+  }
+  else{
+    console.log("order created");
+    res.status(200).json({
     success: true,
     order,
   });
+  }
+  
 };
 
 export const paymentVerification = async (req, res) => {

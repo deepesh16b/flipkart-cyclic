@@ -84,7 +84,7 @@ const Cart = () => {
         "Access-Control-Allow-Origin": "*",
       },
     });
-    console.log("api key seccess in frobntend");
+    console.log("api key success in frontend");
     const { data:{order} } = await axios.post(`${URL}/checkout`, {
       amount,
     }, {
@@ -93,7 +93,10 @@ const Cart = () => {
         "Access-Control-Allow-Origin": "*",
       },
     });
-    console.log("order created seccess in frobntend");
+    if(!order){
+      console.log("order failed in frontend");
+    }
+    console.log("order created success in frontend");
     // console.log(data);
     const options = {
       key, 
