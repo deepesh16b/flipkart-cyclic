@@ -25,21 +25,22 @@ export const checkout = async (req, res) => {
     currency: "INR",
   };
   console.log("before order creation");
+
+  try {
   const order = await instance.orders.create(options);
-  if(!order){
-    console.log("order failed");
-    res.status(400).json({
-      success: false,
-      order: "order not created",
-    });
-  }
-  else{
-    console.log("order created");
-    res.status(200).json({
+  console.log("order created");
+  res.status(200).json({
     success: true,
     order,
   });
-  }
+} catch (error) {
+  console.error("order failed", error);
+  res.status(400).json({
+    success: false,
+    order: "order not created",
+  });
+}
+
   
 };
 
