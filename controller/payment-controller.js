@@ -34,7 +34,7 @@ export const paymentVerification = async (req, res) => {
   if (generated_signature == razorpay_signature) {
     
 
-    res.redirect(`${process.env.FRONTEND_URL}/paymentsuccess?reference=${razorpay_payment_id}`)
+    res.redirect(`/paymentsuccess?reference=${razorpay_payment_id}`)
   }
   else{
     res.status(400).json({

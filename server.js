@@ -21,26 +21,32 @@ app.use(
     origin: "*",
   })
 );
-app.use(express.static(path.join(__dirname, './client/build')))
 
-app.use("*",function(req, res){
-  res.sendFile(path.join(__dirname, './client/build/index.html'));
-})
 app.use(express.urlencoded({ extended: true }));
 const PORT = 8000;
-
 const user = process.env.USER_NAME;
 const password = process.env.USER_PASSWORD;
+const URL = process.env.MONGODB_URL || `mongodb+srv://${user}:${password}@cluster0.20fbcss.mongodb.net/?retryWrites=true&w=majority`;
 
-Connection(user, password);
+Connection(URL);
 
-app.listen(PORT || process.env.PORT);
 
-DefaultData();
 
 app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", Route);
+
+
+// app.use(express.static(path.join(__dirname, './client/build')))
+app.use(express.static('client/build'));
+app.use("*",function(req, res){
+  res.sendFile(path.join(__dirname, './client/build/index.html'));
+})
+
+
+app.listen(PORT || process.env.PORT);
+
+DefaultData();
 
 app.get("/getKey", (req, res) => {
   res.status(200).json({ key: process.env.RAZORPAY_API_KEY });

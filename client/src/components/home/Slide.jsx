@@ -179,7 +179,7 @@ export const Slide = ({ loading, products, title, timer }) => {
               <Item>
                 <Image src={product.url} alt="product" />
                 <Text style={{ color: "#212121", fontWeight: 600 }}>
-                  {product.title.shortTitle}
+                  {/* {product.title.shortTitle} */}
                 </Text>
                 <Text style={{ color: "green" }}>{product.discount}</Text>
                 <Text style={{ color: "#212121", opacity: "0.6" }}>
